@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 
 namespace Project2015To2017.Definition
@@ -21,5 +22,6 @@ namespace Project2015To2017.Definition
         public string AssemblyName { get; internal set; }
         public bool AllowUnsafeBlocks { get; internal set; }
         public string DefineConstants { get; internal set; }
+        public FileInfo NuSpecFile { get; internal set; }
     }
 }

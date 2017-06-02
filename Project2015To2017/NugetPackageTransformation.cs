@@ -43,6 +43,11 @@ namespace Project2015To2017
                     ExtractPackageConfiguration(definition, nuspec, ns);
                 }
 
+                if (definition.PackageConfiguration != null)
+                {
+                    definition.NuSpecFile = nuspecFiles[0];
+
+                }
                 if (definition.PackageConfiguration == null)
                 {
                     Console.WriteLine("Error reading package info from nuspec.");

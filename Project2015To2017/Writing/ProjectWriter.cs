@@ -65,12 +65,17 @@ namespace Project2015To2017.Writing
             if (project.ItemsToInclude?.Count > 0)
             {
                 var includeGroup = new XElement("ItemGroup");
-                foreach (var include in project.ItemsToInclude.Select(RemoveAllNamespaces))
+                foreach (var include in project.ItemsToInclude.Where(x => !IsNuSpec(project, x)).Select(RemoveAllNamespaces))
                 {
                     includeGroup.Add(include);
                 }
 
                 projectNode.Add(includeGroup);
+            }
+
+            if (project.NuSpecFile != null)
+            {
+                File.Move(project.NuSpecFile.FullName, project.NuSpecFile.FullName + ".old");
             }
 
             using (var filestream = File.Open(outputFile.FullName, FileMode.Create))
@@ -90,6 +95,15 @@ namespace Project2015To2017.Writing
 					 where (!a.IsNamespaceDeclaration)
 					 select new XAttribute(a.Name.LocalName, a.Value)) : null);
 		}
+
+        private bool IsNuSpec(Project project, XElement element)
+        {
+            if (project.NuSpecFile == null)
+            {
+                return false;
+            }
+            return project.NuSpecFile.Name == element.Attribute("Include").Value;
+        }
 
 		private bool IsDefaultIncludedAssemblyReference(string assemblyReference)
         {
