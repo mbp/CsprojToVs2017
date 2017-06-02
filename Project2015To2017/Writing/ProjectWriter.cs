@@ -65,13 +65,20 @@ namespace Project2015To2017.Writing
             if (project.ItemsToInclude?.Count > 0)
             {
                 var includeGroup = new XElement("ItemGroup");
-                foreach (var include in project.ItemsToInclude.Where(x => !IsNuSpec(project, x)).Select(RemoveAllNamespaces))
+                foreach (var include in project.ItemsToInclude.Where(x => !IsNuSpec(project, x)).Where(x => !IsPackagesConfig(x)).Select(RemoveAllNamespaces))
                 {
                     includeGroup.Add(include);
                 }
 
                 projectNode.Add(includeGroup);
+
+                var packagesConfig = project.ItemsToInclude.FirstOrDefault(x => IsPackagesConfig(x));
+                if (packagesConfig != null)
+                {
+                    File.Move(Path.Combine(outputFile.DirectoryName, "packages.config"), Path.Combine(outputFile.DirectoryName, "packages.config.old"));
+                }
             }
+
 
             if (project.NuSpecFile != null)
             {
@@ -103,6 +110,11 @@ namespace Project2015To2017.Writing
                 return false;
             }
             return project.NuSpecFile.Name == element.Attribute("Include").Value;
+        }
+
+        private bool IsPackagesConfig(XElement element)
+        {
+            return "packages.config" == element.Attribute("Include").Value;
         }
 
 		private bool IsDefaultIncludedAssemblyReference(string assemblyReference)
