@@ -164,23 +164,6 @@ namespace Project2015To2017Tests
         }
 
         [TestMethod]
-        public async Task ReadsDefineConstants()
-        {
-            var xml = @"<?xml version=""1.0"" encoding=""utf-8""?>
-<Project ToolsVersion=""14.0"" DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"">
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <DefineConstants>foo</DefineConstants>
-  </PropertyGroup>
-</Project>";
-
-            var project = await ParseAndTransformAsync(xml).ConfigureAwait(false);
-
-            Assert.AreEqual("foo", project.DefineConstants);
-        }
-
-        [TestMethod]
         public async Task ReadsWindowsApplication()
         {
             var xml = @"<?xml version=""1.0"" encoding=""utf-8""?>
