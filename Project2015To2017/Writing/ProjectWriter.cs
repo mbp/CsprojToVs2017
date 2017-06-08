@@ -17,11 +17,6 @@ namespace Project2015To2017.Writing
 
             projectNode.Add(GetMainPropertyGroup(project, outputFile));
 
-            if (project.ConditionalPropertyGroups != null)
-            {
-                projectNode.Add(project.ConditionalPropertyGroups.Select(RemoveAllNamespaces));
-            }
-
             if (project.ProjectReferences?.Count > 0)
             {
                 var itemGroup = new XElement("ItemGroup");
