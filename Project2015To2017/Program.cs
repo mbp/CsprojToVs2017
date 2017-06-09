@@ -64,7 +64,7 @@ namespace Project2015To2017
                 Console.Write($"Transformation succeeded but cannot create backup file. Please delete {backupFileName}.");
                 return;
             }
-            File.Copy(args[0], fileInfo.FullName + ".old");
+            //File.Copy(args[0], fileInfo.FullName + ".old");
 
             new ProjectWriter().Write(projectDefinition, fileInfo);
         }
