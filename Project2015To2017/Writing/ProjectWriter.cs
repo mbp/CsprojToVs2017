@@ -70,7 +70,7 @@ namespace Project2015To2017.Writing
                 var packagesConfig = project.ItemsToInclude.FirstOrDefault(x => IsPackagesConfig(x));
                 if (packagesConfig != null)
                 {
-                    File.Move(Path.Combine(outputFile.DirectoryName, "packages.config"), Path.Combine(outputFile.DirectoryName, "packages.config.old"));
+                    File.Delete(Path.Combine(outputFile.DirectoryName, "packages.config"));
                 }
             }
 
